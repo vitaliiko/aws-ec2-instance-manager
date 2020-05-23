@@ -1,0 +1,31 @@
+service: ec2-instance-manager
+
+provider:
+  name: aws
+  runtime: python3.8
+  environment:
+    INSTANCE_IDS: ${env:INSTANCE_IDS}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - logs:CreateLogGroup
+        - logs:CreateLogStream
+        - logs:PutLogEvents
+      Resource: "arn:aws:logs:*:*:*"
+
+    - Effect: Allow
+      Action:
+        - ec2:Start*
+        - ec2:Stop*
+      Resource: "*"
+
+functions:
+  stopInstances:
+    handler: handlers/manage_instances.stop_instances
+    events:
+      - schedule: cron(0 19 * * ? *)
+
+  startInstances:
+    handler: handlers/manage_instances.start_instances
+    events:
+      - schedule: cron(0 7 * * ? *)

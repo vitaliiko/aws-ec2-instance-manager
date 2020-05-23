@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  deploy:
+    image: vitaliikobrin/serverless
+    volumes:
+      - ./serverless-config/:/serverless
+    env_file:
+      - instance-manager-properties.env
+    command: bash -c './deploy-serverless.sh'

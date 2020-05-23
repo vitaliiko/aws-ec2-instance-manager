@@ -21,11 +21,11 @@ provider:
 
 functions:
   stopInstances:
-    handler: handlers/manage_instances.stop_instances
+    handler: handlers/instance_manager.stop_instances
     events:
       - schedule: cron(0 19 * * ? *)
 
   startInstances:
-    handler: handlers/manage_instances.start_instances
+    handler: handlers/instance_manager.start_instances
     events:
       - schedule: cron(0 7 * * ? *)

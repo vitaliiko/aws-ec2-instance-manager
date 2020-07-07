@@ -23,9 +23,9 @@ functions:
   stopInstances:
     handler: handlers/instance_manager.stop_instances
     events:
-      - schedule: cron(0 19 * * ? *)
+      - schedule: cron(0 18 * * ? *)
 
   startInstances:
     handler: handlers/instance_manager.start_instances
     events:
-      - schedule: cron(0 7 * * ? *)
+      - schedule: cron(0 9 * * ? *)

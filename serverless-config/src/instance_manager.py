@@ -18,6 +18,10 @@ class InstanceManager:
         ec2.stop_instances(InstanceIds=self.instance_ids)
         print('stopped instances: ' + str(instances))
 
+    def reboot_instances(self):
+        ec2.reboot_instances(InstanceIds=self.instance_ids)
+        print('rebooted instances: ' + str(instances))
+
     def get_instance_states(self):
         response = ec2.describe_instances(InstanceIds=self.instance_ids)
         instance_descriptions = response['Reservations'][0]['Instances']

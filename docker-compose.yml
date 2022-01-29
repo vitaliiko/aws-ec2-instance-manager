@@ -2,9 +2,8 @@ version: '3'
 
 services:
   deploy:
-    image: vitaliikobrin/serverless
-    volumes:
-      - ./serverless-config/:/serverless
+    build:
+      context: .
     env_file:
       - instance-manager-properties.env
-    command: bash -c './deploy-serverless.sh'
+    command: bash -c "sls deploy --verbose --region $${AWS_REGION} --stage $${STAGE}"

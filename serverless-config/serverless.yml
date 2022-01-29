@@ -1,8 +1,11 @@
 service: ec2-instance-manager
 
+plugins:
+  - serverless-python-requirements
+
 provider:
   name: aws
-  runtime: python3.8
+  runtime: python3.9
   environment:
     INSTANCE_IDS: ${env:INSTANCE_IDS}
   iamRoleStatements:
@@ -20,13 +23,29 @@ provider:
       Resource: "*"
 
 functions:
-  stopInstances:
-    handler: handlers/instance_manager.stop_instances
+  stop-instances:
+    handler: handlers/scheduled.stop_instances
     events:
       - schedule: ${env:STOP_INSTANCE_CRON}
 
-  startInstances:
-    handler: handlers/instance_manager.start_instances
+  start-instances:
+    handler: handlers/scheduled.start_instances
     events:
       - schedule: ${env:START_INSTANCE_CRON_1}
       - schedule: ${env:START_INSTANCE_CRON_2}
+
+  telegram-message-handler:
+    handler: handlers/telegram_bot.handle
+    environment:
+      TELEGRAM_BOT_TOKEN: ${env:TELEGRAM_BOT_TOKEN}
+    events:
+      - http:
+          path: instance_manager/api/telegram/handle
+          method: post
+          cors:
+            origin: '*'
+
+package:
+  patterns:
+    - '!node_modules/**'
+    - '!package*'

@@ -1,0 +1,9 @@
+.serverless
+.idea
+resources
+
+Dockerfile*
+.gitingore
+*.env.sample
+*.env
+__pycache__

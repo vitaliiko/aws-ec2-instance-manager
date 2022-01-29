@@ -8,6 +8,7 @@ provider:
   runtime: python3.9
   environment:
     INSTANCE_IDS: ${env:INSTANCE_IDS}
+    PERMITTED_USER_ID: ${env:PERMITTED_USER_ID}
   iamRoleStatements:
     - Effect: Allow
       Action:

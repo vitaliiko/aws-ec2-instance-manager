@@ -6,6 +6,7 @@ import requests
 from bot_command_handler import BotCommandHandler
 
 TOKEN = os.environ['TELEGRAM_BOT_TOKEN']
+USER_ID = os.environ['PERMITTED_USER_ID']
 BASE_URL = 'https://api.telegram.org/bot{}'.format(TOKEN)
 
 handler = BotCommandHandler()
@@ -14,8 +15,14 @@ handler = BotCommandHandler()
 def handle(event, context):
     try:
         data = json.loads(event['body'])
+        chat_id = str(data['message']['chat']['id'])
+
+        print('UserID: ' + chat_id)
+        if chat_id != USER_ID:
+            print('Unauthorized user ID: ' + chat_id)
+            return {'statusCode': 200}
+
         message = str(data['message']['text'])
-        chat_id = data['message']['chat']['id']
 
         response = handler.handle(message)
 

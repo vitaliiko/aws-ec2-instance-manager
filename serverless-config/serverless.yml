@@ -32,8 +32,7 @@ functions:
   start-instances:
     handler: handlers/scheduled.start_instances
     events:
-      - schedule: ${env:START_INSTANCE_CRON_1}
-      - schedule: ${env:START_INSTANCE_CRON_2}
+      - schedule: ${env:START_INSTANCE_CRON}
 
   telegram-message-handler:
     handler: handlers/telegram_bot.handle
